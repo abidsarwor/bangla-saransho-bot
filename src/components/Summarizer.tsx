@@ -21,8 +21,8 @@ const Summarizer: React.FC = () => {
   const generateSummary = () => {
     if (!inputText.trim()) {
       toast({
-        title: "কিছু লিখুন",
-        description: "অনুগ্রহ করে সারাংশ করার জন্য একটি আর্টিকেল পেস্ট করুন।",
+        title: "Please write something",
+        description: "Please paste an article to summarize.",
         variant: "destructive",
       });
       return;
@@ -46,18 +46,18 @@ const Summarizer: React.FC = () => {
     const words = text.split(/\s+/).filter(word => word.length > 0);
     
     if (words.length < 10) {
-      return "পর্যাপ্ত তথ্য নেই। অনুগ্রহ করে আরও বিস্তারিত আর্টিকেল প্রদান করুন।";
+      return "Not enough information. Please provide a more detailed article.";
     }
     
     if (text.toLowerCase().includes("artificial intelligence") || text.toLowerCase().includes("ai")) {
-      return "এই আর্টিকেলে বলা হয়েছে যে কৃত্রিম বুদ্ধিমত্তা কীভাবে বিভিন্ন খাতে ব্যবহৃত হচ্ছে, যেমন স্বাস্থ্য, শিক্ষা ও প্রযুক্তি। এটি উল্লেখ করেছে যে, AI মানব জীবনের গুণগত মান বাড়াতে সাহায্য করতে পারে। তবে সেই সাথে এর বেশ কিছু সীমাবদ্ধতা এবং নৈতিক চ্যালেঞ্জও রয়েছে। ভবিষ্যতে এই প্রযুক্তিটি আরও উন্নত হবে এবং আমাদের দৈনন্দিন জীবনে আরও বেশি প্রভাব ফেলবে।";
+      return "This article discusses how artificial intelligence is being used in various sectors such as healthcare, education, and technology. It mentions that AI can help improve the quality of human life. However, it also notes several limitations and ethical challenges. In the future, this technology will continue to evolve and have an increasing impact on our daily lives.";
     }
     
     if (text.toLowerCase().includes("climate") || text.toLowerCase().includes("environment")) {
-      return "এই আর্টিকেলটি জলবায়ু পরিবর্তন নিয়ে আলোচনা করেছে। এতে বলা হয়েছে যে বিশ্বব্যাপী তাপমাত্রা বৃদ্ধি, সমুদ্রপৃষ্ঠের উচ্চতা বৃদ্ধি এবং চরম আবহাওয়া ঘটনার মতো প্রভাবগুলি ইতিমধ্যেই দৃশ্যমান। বিজ্ঞানীরা সতর্ক করেছেন যে এই পরিবর্তন মোকাবেলায় দ্রুত পদক্ষেপ না নিলে, পরিস্থিতি আরও খারাপ হবে। কার্বন নিঃসরণ কমানো এবং টেকসই উন্নয়নের দিকে মনোযোগ দেওয়া জরুরি।";
+      return "This article discusses climate change. It states that effects such as global temperature rise, sea level rise, and extreme weather events are already visible. Scientists warn that without rapid action to address these changes, the situation will worsen. Reducing carbon emissions and focusing on sustainable development is crucial.";
     }
     
-    return "এই আর্টিকেলে একটি গুরুত্বপূর্ণ বিষয় নিয়ে আলোচনা করা হয়েছে, যা সমাজ ও অর্থনীতির উপর প্রভাব ফেলছে। লেখক বিভিন্ন দৃষ্টিকোণ থেকে বিষয়টি বিশ্লেষণ করেছেন এবং সমস্যার সমাধানের জন্য কিছু সুপারিশ দিয়েছেন। আর্টিকেলটিতে সাম্প্রতিক গবেষণা ও তথ্য ব্যবহার করে যুক্তি উপস্থাপন করা হয়েছে। সামগ্রিকভাবে, এটি পাঠককে বিষয়টি সম্পর্কে একটি সমগ্র ধারণা দেয় এবং আরও গভীর চিন্তার জন্য উৎসাহিত করে।";
+    return "This article discusses an important topic that is impacting society and the economy. The author analyzes the subject from various perspectives and offers some recommendations for addressing the problem. The article uses recent research and data to present arguments. Overall, it provides readers with a comprehensive understanding of the topic and encourages deeper thinking.";
   };
 
   const resetForm = () => {
@@ -72,8 +72,8 @@ const Summarizer: React.FC = () => {
     navigator.clipboard.writeText(summary).then(() => {
       setCopied(true);
       toast({
-        title: "কপি হয়েছে!",
-        description: "সারাংশটি আপনার ক্লিপবোর্ডে কপি করা হয়েছে।",
+        title: "Copied!",
+        description: "Summary copied to your clipboard.",
       });
       
       setTimeout(() => {
@@ -86,10 +86,10 @@ const Summarizer: React.FC = () => {
     <div className="container mx-auto px-4">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">আর্টিকেল লিখুন বা পেস্ট করুন</h2>
+          <h2 className="text-xl font-semibold">Write or paste an article</h2>
           <Textarea 
-            placeholder="এখানে আর্টিকেলটি পেস্ট করুন..." 
-            className="min-h-[300px] font-bengali"
+            placeholder="Paste your article here..." 
+            className="min-h-[300px]"
             value={inputText}
             onChange={handleInputChange}
           />
@@ -100,22 +100,22 @@ const Summarizer: React.FC = () => {
               disabled={isLoading || !inputText.trim()}
             >
               {isLoading ? 
-                <><RefreshCwIcon className="mr-2 h-4 w-4 animate-spin" /> অপেক্ষা করুন...</> : 
-                'সারাংশ তৈরি করুন'}
+                <><RefreshCwIcon className="mr-2 h-4 w-4 animate-spin" /> Please wait...</> : 
+                'Generate Summary'}
             </Button>
             <Button 
               onClick={resetForm} 
               variant="outline" 
               disabled={isLoading || (!inputText && !summary)}
             >
-              রিসেট
+              Reset
             </Button>
           </div>
         </div>
 
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-semibold">সারাংশ</h2>
+            <h2 className="text-xl font-semibold">Summary</h2>
             {summary && (
               <Button 
                 size="sm" 
@@ -124,25 +124,25 @@ const Summarizer: React.FC = () => {
                 className="text-muted-foreground hover:text-foreground"
               >
                 {copied ? 
-                  <><CopyCheckIcon className="h-4 w-4 mr-1" /> কপি করা হয়েছে</> : 
-                  <><CopyIcon className="h-4 w-4 mr-1" /> কপি করুন</>}
+                  <><CopyCheckIcon className="h-4 w-4 mr-1" /> Copied</> : 
+                  <><CopyIcon className="h-4 w-4 mr-1" /> Copy</>}
               </Button>
             )}
           </div>
           <Card className={`p-4 min-h-[300px] ${isLoading ? 'animate-pulse-slow' : ''}`}>
             {isLoading ? (
               <div className="h-full flex items-center justify-center">
-                <p className="text-muted-foreground">সারাংশ তৈরি হচ্ছে...</p>
+                <p className="text-muted-foreground">Generating summary...</p>
               </div>
             ) : summary ? (
-              <p className="font-bengali leading-relaxed">{summary}</p>
+              <p className="leading-relaxed">{summary}</p>
             ) : (
               <div className="h-full flex flex-col items-center justify-center text-center gap-2">
                 <p className="text-muted-foreground">
-                  আর্টিকেলটি বাম দিকে লিখুন বা পেস্ট করুন, তারপর সারাংশ তৈরি বাটনে ক্লিক করুন।
+                  Write or paste your article on the left, then click the Generate Summary button.
                 </p>
                 <p className="text-muted-foreground text-sm">
-                  সারাংশটি এখানে প্রদর্শিত হবে
+                  The summary will be displayed here
                 </p>
               </div>
             )}
@@ -153,12 +153,12 @@ const Summarizer: React.FC = () => {
       <Separator className="my-8" />
       
       <div className="mb-8">
-        <h3 className="text-lg font-semibold mb-2">ব্যবহার নির্দেশিকা:</h3>
+        <h3 className="text-lg font-semibold mb-2">Usage Instructions:</h3>
         <ol className="list-decimal pl-5 space-y-1">
-          <li>বাম দিকের টেক্সট বক্সে আপনার আর্টিকেলটি পেস্ট করুন।</li>
-          <li>"সারাংশ তৈরি করুন" বাটনে ক্লিক করুন।</li>
-          <li>আপনার সারাংশটি ডান পাশে দেখতে পাবেন।</li>
-          <li>প্রয়োজনে "কপি করুন" বাটন ব্যবহার করে সারাংশটি কপি করুন।</li>
+          <li>Paste your article in the text box on the left.</li>
+          <li>Click the "Generate Summary" button.</li>
+          <li>View your summary on the right side.</li>
+          <li>Use the "Copy" button to copy the summary if needed.</li>
         </ol>
       </div>
     </div>
